@@ -10,6 +10,9 @@ lint:
 run:
 	poetry run uvicorn aw_leaderboard:app --reload
 
+test:
+	poetry run pytest tests/
+
 DBDIR = /tmp/aw-leaderboard-db
 
 DBCONTAINER = aw-leaderboard-postgres

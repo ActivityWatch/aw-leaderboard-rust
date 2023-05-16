@@ -7,10 +7,11 @@ from pydantic import BaseModel
 
 # Secret key for encoding and decoding JWT
 # In a production-level application, you would want to keep this in a secure place, not in the code
-SECRET_KEY = os.environ.get("SECRET_KEY", None)
-assert (
-    SECRET_KEY is not None
-), "No secret key set for JWT authentication! Set environment variable SECRET_KEY"
+SECRET_KEY_FALLBACK = "secret"
+SECRET_KEY = os.environ.get("SECRET_KEY", SECRET_KEY_FALLBACK)
+if SECRET_KEY == SECRET_KEY_FALLBACK:
+    print("WARNING: Using fallback secret key. Make sure it's set in prod.")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 120
 
