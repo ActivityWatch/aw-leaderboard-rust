@@ -22,10 +22,11 @@ def UUID():
 
 
 class Base(DeclarativeBase):
-    pass
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class User(Base):
+class UserModel(Base):
     __tablename__ = "users"
 
     # UUID not supported by SQLite
@@ -37,7 +38,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
 
-class Event(Base):
+class EventModel(Base):
     __tablename__ = "events"
 
     id: Column[String] = Column(UUID(), primary_key=True, index=True)

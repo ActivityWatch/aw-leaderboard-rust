@@ -44,7 +44,8 @@ async def register_user(
 ) -> User:
     print(f"Registering user {username} with email {email}")
     try:
-        return (await db.create_user(username, password, email)).dict()
+        user = await db.create_user(username, password, email)
+        return User(**user.to_dict())
     except UserExistsError as e:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -64,19 +65,22 @@ async def login_for_access_token(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token = create_access_token(user.dict().get("username"))
-    return {"access_token": access_token, "token_type": "bearer"}
+    return Token(
+        access_token=create_access_token(user.to_dict().get("username")),
+        token_type="bearer",
+    )
 
 
 async def get_current_user(token: TokenDep, db: DatabaseDep) -> User:
-    user = await db.get_user_by_username(token.username)
+    token_data = jwt_decode(token)
+    user = await db.get_user_by_username(token_data.username)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return user
+    return User(**user.to_dict())
 
 
 async def get_current_user_opt(token: TokenOptDep, db: DatabaseDep) -> Optional[User]:
@@ -84,4 +88,4 @@ async def get_current_user_opt(token: TokenOptDep, db: DatabaseDep) -> Optional[
         return None
     token_data = jwt_decode(token)
     user = await db.get_user_by_username(token_data.username)
-    return user
+    return User(**user.to_dict()) if user else None

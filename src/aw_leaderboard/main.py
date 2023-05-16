@@ -25,7 +25,11 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/", response_class=HTMLResponse)
-async def get_index(request: Request, db: Database = Depends(get_db), current_user: User = Depends(get_current_user_opt)):
+async def get_index(
+    request: Request,
+    db: Database = Depends(get_db),
+    current_user: User = Depends(get_current_user_opt),
+):
     return templates.TemplateResponse(
         "index.html", {"request": request, "user": current_user}
     )
@@ -47,8 +51,8 @@ async def upload_events(
     db: Database = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    events = [event.dict() for event in events]
-    db.insert_events(events, user)
+    events = [event for event in events]
+    db.insert_events(events, user.username)
     await db.commit()
 
     return {"message": "Events uploaded successfully"}

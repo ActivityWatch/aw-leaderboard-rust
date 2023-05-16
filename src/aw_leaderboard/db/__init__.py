@@ -1,4 +1,10 @@
 from .database import Database, UserExistsError, get_db
-from .models import Event, User
+from .models import EventModel, UserModel
 
-__all__ = ["Database", "User", "Event", "get_db", "UserExistsError"]
+__all__ = [
+    "Database",
+    "UserModel",
+    "EventModel",
+    "get_db",
+    "UserExistsError",
+]

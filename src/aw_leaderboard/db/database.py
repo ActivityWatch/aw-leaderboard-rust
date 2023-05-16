@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.future import select
 from sqlalchemy.orm import sessionmaker
 
-from .models import Base, User
+from .models import Base, UserModel
 
 # TODO: Switch back to postgres for prod
 # DATABASE_URL = "postgresql+asyncpg://user:password@localhost:5432/aw-leaderboard"
@@ -52,9 +52,9 @@ class Database:
     async def commit(self):
         await self.db.commit()
 
-    async def create_user(self, username: str, password: str, email: str):
+    async def create_user(self, username: str, password: str, email: str) -> UserModel:
         hashed_password = pwd_context.hash(password)
-        user = User(
+        user = UserModel(
             id=str(uuid4()),
             email=email,
             hashed_password=hashed_password,
@@ -72,30 +72,39 @@ class Database:
         self,
         username_or_email: str,
         password: str,
-    ) -> Optional[User]:
+    ) -> Optional[UserModel]:
         user = await self.get_user_by_username(
             username_or_email
         ) or await self.get_user_by_email(username_or_email)
         if not user:
             return None
-        if not pwd_context.verify(password, user.hashed_password):
+        if not pwd_context.verify(password, str(user.hashed_password)):
             return None
         return user
 
-    async def get_user(self, user_id: str):
-        result = await self.db.execute(select(User).filter(User.id == user_id))
+    async def get_user(self, user_id: str) -> Optional[UserModel]:
+        result = await self.db.execute(
+            select(UserModel).filter(UserModel.id == user_id)
+        )
         user = result.scalars().first()
         return user
 
-    async def get_user_by_username(self, username: str):
-        result = await self.db.execute(select(User).where(User.username == username))
+    async def get_user_by_username(self, username: str) -> Optional[UserModel]:
+        result = await self.db.execute(
+            select(UserModel).where(UserModel.username == username)
+        )
         user = result.scalars().first()
         if user:
-            return User(**user.__dict__)
+            return UserModel(**user.__dict__)
         else:
             return None
 
     async def get_user_by_email(self, email: str):
-        result = await self.db.execute(select(User).filter(User.email == email))
+        result = await self.db.execute(
+            select(UserModel).filter(UserModel.email == email)
+        )
         user = result.scalars().first()
         return user
+
+    def insert_events(self, events, username):
+        raise NotImplementedError

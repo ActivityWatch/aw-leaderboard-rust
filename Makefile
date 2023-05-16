@@ -1,5 +1,8 @@
-SRCDIR = src/aw_leaderboard
+.PHONY: typecheck lint run test format format-check
 
+SRCDIR = src/aw_leaderboard
+DBDIR = /tmp/aw-leaderboard-db
+DBCONTAINER = aw-leaderboard-postgres
 
 typecheck:
 	poetry run mypy ${SRCDIR}
@@ -13,9 +16,11 @@ run:
 test:
 	poetry run pytest tests/
 
-DBDIR = /tmp/aw-leaderboard-db
+format:
+	poetry run black ${SRCDIR} tests
 
-DBCONTAINER = aw-leaderboard-postgres
+format-check:
+	poetry run black --check ${SRCDIR} tests
 
 db-run:
 	docker container stop ${DBCONTAINER} || true
