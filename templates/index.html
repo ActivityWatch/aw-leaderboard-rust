@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ActivityWatch Leaderboard</title>
+</head>
+<body>
+    <h1>Welcome to the ActivityWatch Leaderboard!</h1>
+    <p>Track and share your activity data with the community.</p>
+    {% if user %}
+        <p>Welcome, {{ user.email }}!</p>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a> or <a href="/signup">Sign Up</a> to get started.
+    {% endif %}
+</body>
+</html>
