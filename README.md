@@ -10,37 +10,46 @@ Inspired by the [WakaTime leaderboard](https://wakatime.com/leaders).
 Built with FastAPI, SQLalchemy, PostgreSQL. (**note:** this stack might change)
 
 
-## Broad overview
+## Overview
 
-A user runs ActivityWatch on their computer, but wants to share how much they've worked on X.
+The `aw-leaderboard` application allows ActivityWatch users to share activity data through a "share" section in the web UI. After authenticating with the leaderboard service, users can choose the type of data to share by configuring relevant categories, patterns, and other parameters.
 
-They go into the "share" section of the web UI, authenticate with the leaderboard service, and then get to choose what to share.
+Users can either define these configurations themselves or select from a list of options predefined by existing leaderboard categories.
 
-What to share is configured by specifying things like relevant categories and their patterns, flooding parameters, etc.
-
-Either we let the user specify everything themselves, or we give them a list of options from already existing leaderboard categories. (not sure what the smartest thing is here)
-
-When the user is happy with their choices, the data is pulled and shown for review, then finally events are sent with all event data stripped except the category names (the `$category` key in event data).
+Once users are satisfied with their selection, the data is pulled for review. Only the event data stripped to the category names (the `$category` key in event data) is sent and displayed.
 
 
 ## Goals
 
- - Serve as a website for people to share how much time they've spent on different things (projects, communities, games).
-   - One example in particular: allow contributors to share how much time they've spent working on/in ActivityWatch.
-   - Users could want this for several reasons, like: bragging rights, accountability (social media overuse).
- - Modified version should be able to function as a company/team server that members can report time to.
- - Modified version should be able to function as a research server that study participants can report time to.
+The main goal is to:
+
+ - Provide a platform for users to share their activity times across different categories. Like projects, communities, or games.
+   - For example, contributors can use it to report the time spent working on ActivityWatch. (dogfooding)
 
 Secondary goals:
 
+ - Enhance the social aspect of ActivityWatch by enabling users to share their stats.
+   - Promote user engagement by providing badges/links for online sharing or profile display, which may also increase our reach.
  - Make ActivityWatch more social by letting users share their stats
    - Make it something people can "show off" online or in their profiles (with badge/link), helps improve reach.
- - A way to track contributor activity and pay out salary based on time spent
+ - Develop a system to track contributor activity and disburse payments based on time spent.
+ - Serve as a foundation that could be forked and modified to function as a reporting server for teams, companies, and research studies.
+
+
+## Why do users want to share data?
+
+Users may wish to share their data for a variety of reasons, such as:
+
+- To maintain accountability, like ensuring they complete their thesis or prevent social media overuse.
+- To showcase their productivity.
+- To demonstrate their contributions to a specific project or community.
 
 
 ## Considerations
 
  - How will/should multiple devices be handled?
+ - Better name
+   - We need a better name than "aw-leaderboard".
 
 
 ## Related issues
