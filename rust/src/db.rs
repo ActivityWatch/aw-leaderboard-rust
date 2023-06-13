@@ -1,8 +1,8 @@
 use bcrypt::{hash, verify, DEFAULT_COST};
-use rusqlite::{params, Connection, Error};
-use std::env;
 use r2d2::PooledConnection;
 use r2d2_sqlite::SqliteConnectionManager;
+use rusqlite::params;
+use std::env;
 
 use crate::error::DatastoreError;
 
@@ -22,7 +22,7 @@ type Result<T> = std::result::Result<T, DatastoreError>;
 impl Db {
     pub fn new() -> Result<Db> {
         let manager = if let Ok(database_url) = env::var("DATABASE_URL") {
-            SqliteConnectionManager::file(database_url) 
+            SqliteConnectionManager::file(database_url)
         } else {
             log::warn!("DATABASE_URL was unset, using in-memory database");
             SqliteConnectionManager::memory()
@@ -51,6 +51,7 @@ impl Db {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn init_test(&self) -> Result<()> {
         // Creates a test user
         self.add_user("test", "test@example.com", "test")
@@ -75,7 +76,8 @@ impl Db {
 
     pub fn get_user(&self, name: &str) -> Result<User> {
         let conn = self.conn()?;
-        let mut stmt = conn.prepare("SELECT id, name, email, password FROM user WHERE name = ?1")?;
+        let mut stmt =
+            conn.prepare("SELECT id, name, email, password FROM user WHERE name = ?1")?;
         let mut user_iter = stmt.query_map(params![name], |row| {
             Ok(User {
                 id: row.get(0)?,
@@ -87,7 +89,9 @@ impl Db {
 
         match user_iter.next() {
             Some(user) => Ok(user?),
-            None => Err(DatastoreError::Rusqlite(rusqlite::Error::QueryReturnedNoRows)),
+            None => Err(DatastoreError::Rusqlite(
+                rusqlite::Error::QueryReturnedNoRows,
+            )),
         }
     }
 

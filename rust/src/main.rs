@@ -143,7 +143,7 @@ fn get_current_user(cookies: &CookieJar) -> Option<String> {
     cookies.get_private("user_id").map(|cookie| cookie.value().to_string())
 }
 
-fn build_rocket() -> rocket::Rocket<rocket::Build> {
+fn rocket() -> rocket::Rocket<rocket::Build> {
     let db = db::Db::new();
     if let Err(e) = db {
         panic!("Error: {:?}", e);
@@ -157,7 +157,7 @@ fn build_rocket() -> rocket::Rocket<rocket::Build> {
 
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
-    let _rocket = build_rocket()
+    let _rocket = rocket()
         .launch()
         .await;
 

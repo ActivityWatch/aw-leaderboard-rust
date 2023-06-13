@@ -5,24 +5,24 @@ mod tests {
 
     #[test]
     fn test_home() {
-        let rocket = crate::build_rocket();
-        let client = Client::new(rocket).expect("valid rocket instance");
+        let rocket = crate::rocket();
+        let client = Client::tracked(rocket).expect("valid rocket instance");
         let response = client.get("/").dispatch();
         assert_eq!(response.status(), Status::Ok);
     }
 
     #[test]
     fn test_profile() {
-        let rocket = crate::build_rocket();
-        let client = Client::new(rocket).expect("valid rocket instance");
+        let rocket = crate::rocket();
+        let client = Client::tracked(rocket).expect("valid rocket instance");
         let response = client.get("/profile/test").dispatch();
         assert_eq!(response.status(), Status::Ok);
     }
 
     #[test]
     fn test_login_logout() {
-        let rocket = crate::build_rocket();
-        let client = Client::new(rocket).expect("valid rocket instance");
+        let rocket = crate::rocket();
+        let client = Client::tracked(rocket).expect("valid rocket instance");
 
         // Add a user to the DB for testing
         let db = client.rocket().state::<crate::db::Db>().expect("expected db in rocket state");
