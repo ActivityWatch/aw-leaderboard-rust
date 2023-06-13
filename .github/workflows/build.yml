@@ -52,3 +52,28 @@ jobs:
     - name: Typecheck
       run: |
         make typecheck
+
+  test-rust:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0  # fetch all branches and tags
+
+    - name: Install latest nightly
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+
+    - name: Run cargo check
+      working-directory: rust
+      run: |
+        cargo check
+
+    - name: Run cargo test
+      working-directory: rust
+      run: |
+        cargo test
