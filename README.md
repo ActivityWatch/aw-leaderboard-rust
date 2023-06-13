@@ -7,7 +7,9 @@ A public leaderboard for ActivityWatch data.
 
 Inspired by the [WakaTime leaderboard](https://wakatime.com/leaders).
 
-Built with FastAPI, SQLalchemy, PostgreSQL. (**note:** this stack might change)
+~~Built with FastAPI, SQLalchemy, PostgreSQL. (**note:** this stack might change)~~
+
+**Rewrite in progress, see `rust/`.**
 
 
 ## Overview
