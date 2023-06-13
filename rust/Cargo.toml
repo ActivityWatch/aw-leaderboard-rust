@@ -1,0 +1,20 @@
+[package]
+name = "aw-leaderboard"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.5.0-rc.3", features = ["json", "secrets"] }
+rocket_contrib = {version = "*", default-features=false}
+rocket_dyn_templates = {version = "=0.1.0-rc.3", features=["handlebars"]}
+rusqlite = "0.29"
+jsonwebtoken = "7.2.0"
+oauth2 = { version = "4.0", features = ["reqwest"] }
+reqwest = "0.11.3"
+tokio = { version = "1.0", features = ["full"] }
+bcrypt = "0.9.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4.19"
+thiserror = "1.0.40"
+r2d2_sqlite = "0.22.0"
+r2d2 = "0.8.10"

@@ -1,0 +1,16 @@
+<div style="display: flex">
+    <div style="flex: 1">
+        <a href="/">
+            <b>aw-leaderboard</b>
+        </a>
+    </div>
+    <div style="flex: 1; text-align: right">
+        {{#if user}}
+            <p>Logged in as {{user.username}}</p>
+            <a href="/logout">Logout</a>
+        {{else}}
+            <a href="/login">Login</a> | <a href="/register">Register</a>
+        {{/if}}
+    </div>
+</div>
+<hr>
