@@ -24,9 +24,9 @@ mod tests {
         let rocket = crate::rocket();
         let client = Client::tracked(rocket).expect("valid rocket instance");
 
-        // Add a user to the DB for testing
-        let db = client.rocket().state::<crate::db::Db>().expect("expected db in rocket state");
-        db.init_test().unwrap();
+        // Register a user
+        let response = client.post("/register").header(ContentType::Form).body("username=testuser&email=testunit@example.com&password=test").dispatch();
+        assert_eq!(response.status(), Status::SeeOther); // Expect a redirect after successful registration
 
         // Attempt to login
         let response = client
@@ -34,7 +34,7 @@ mod tests {
             .header(ContentType::Form)
             .body("username=test&password=test")
             .dispatch();
-        assert_eq!(response.status(), Status::Ok); // Expect a redirect after successful login
+        assert_eq!(response.status(), Status::SeeOther); // Expect a redirect after successful login
 
         // Attempt to logout
         let response = client.get("/logout").dispatch();
