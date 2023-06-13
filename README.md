@@ -7,9 +7,7 @@ A public leaderboard for ActivityWatch data.
 
 Inspired by the [WakaTime leaderboard](https://wakatime.com/leaders).
 
-~~Built with FastAPI, SQLalchemy, PostgreSQL. (**note:** this stack might change)~~
-
-**Rewrite in progress, see `rust/`.**
+Built with Rust using Rocket and very basic handlebars templates (for now).
 
 
 ## Overview

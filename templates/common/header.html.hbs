@@ -6,8 +6,7 @@
     </div>
     <div style="flex: 1; text-align: right">
         {{#if user}}
-            <p>Logged in as {{user.username}}</p>
-            <a href="/logout">Logout</a>
+            Logged in as <a href="/user/{{user.username}}"></a>{{user.username}} | <a href="/logout">Logout</a>
         {{else}}
             <a href="/login">Login</a> | <a href="/register">Register</a>
         {{/if}}

@@ -12,15 +12,15 @@ mod tests {
     }
 
     #[test]
-    fn test_profile() {
+    fn test_user_profile() {
         let rocket = crate::rocket();
         let client = Client::tracked(rocket).expect("valid rocket instance");
-        let response = client.get("/profile/test").dispatch();
+        let response = client.get("/user/test").dispatch();
         assert_eq!(response.status(), Status::Ok);
     }
 
     #[test]
-    fn test_login_logout() {
+    fn test_user_login_logout() {
         let rocket = crate::rocket();
         let client = Client::tracked(rocket).expect("valid rocket instance");
 

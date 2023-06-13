@@ -17,50 +17,6 @@ jobs:
         submodules: 'recursive'
         fetch-depth: 0  # fetch all branches and tags
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install deps
-      run: |
-        pip install poetry
-        poetry install
-
-    - name: Run tests
-      run: |
-        make test
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: 'recursive'
-        fetch-depth: 0  # fetch all branches and tags
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install deps
-      run: |
-        pip install poetry
-        poetry install
-
-    - name: Typecheck
-      run: |
-        make typecheck
-
-  test-rust:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: 'recursive'
-        fetch-depth: 0  # fetch all branches and tags
-
     - name: Install latest nightly
       uses: actions-rs/toolchain@v1
       with:

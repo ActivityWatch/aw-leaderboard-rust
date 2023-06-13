@@ -58,18 +58,18 @@ impl From<Redirect> for Respondable {
     }
 }
 
-#[get("/profile/<id>")]
-fn profile(id: Option<String>, cookies: &CookieJar) -> Respondable {
+#[get("/user/<id>")]
+fn user(id: Option<String>, cookies: &CookieJar) -> Respondable {
     if id.is_none() {
         match get_current_user(cookies) {
-            Some(user_id) => return Redirect::to(uri!(profile(user_id))).into(),
+            Some(user_id) => return Redirect::to(uri!(user(user_id))).into(),
             None => return Template::render("error", &HashMap::<String, String>::new()).into(),
         }
     }
     let mut context = HashMap::new();
     context.insert("username", id);
     context.insert("user", get_current_user(cookies));
-    Template::render("profile", &context).into()
+    Template::render("user", &context).into()
 }
 
 #[get("/register")]
@@ -82,7 +82,7 @@ fn register() -> Template {
 #[post("/register", data = "<user_form>")]
 fn register_post(db: &State<db::Db>, user_form: Form<User>) -> Result<Redirect, DatastoreError> {
     match db.add_user(&user_form.username, &user_form.email, &user_form.password) {
-        Ok(_) => Ok(Redirect::to(uri!(profile(user_form.username.to_string())))),
+        Ok(_) => Ok(Redirect::to(uri!(user(user_form.username.to_string())))),
         Err(_) => Err(DatastoreError::UserAlreadyExists { username: user_form.username.to_string() }),
     }
 }
@@ -113,7 +113,7 @@ fn login_post(db: &State<db::Db>, login_form: Form<Login>, cookies: &CookieJar) 
             cookies.add_private(Cookie::new("user_id", login_form.username.to_string()));
             cookies.add_private(Cookie::new("jwt", token));
 
-            Ok(Redirect::to(uri!(profile(login_form.username.to_string()))))
+            Ok(Redirect::to(uri!(user(login_form.username.to_string()))))
         }
         _ => Err("Invalid user or password".to_string()),
     }
@@ -145,7 +145,7 @@ fn rocket() -> rocket::Rocket<rocket::Build> {
     db.init_test().expect("Failed to init test db");
     rocket::build()
         .attach(Template::fairing())
-        .mount("/", routes![home, register, register_post, login, login_post, logout, profile])
+        .mount("/", routes![home, register, register_post, login, login_post, logout, user])
         .mount("/static", FileServer::from(relative!("static")))
         .manage(db)
 }
