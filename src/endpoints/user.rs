@@ -1,17 +1,32 @@
 use rocket::{State, response::Redirect};
 use rocket_dyn_templates::Template;
+use serde::Serialize;
 
-use crate::db::Db;
+use crate::db::{Db, self};
 use crate::endpoints::{util::Context, Respondable};
 
+#[derive(Serialize)]
+struct UserWithDevices {
+    user: db::User,
+    devices: Vec<db::Device>,
+}
+
 #[get("/user/<id>")]
-pub fn user(db: &State<Db>, id: Option<String>, mut context: Context) -> Template {
-    let user_profile = db.get_user(&id.unwrap());
+pub fn user(db: &State<Db>, id: String, mut context: Context) -> Template {
+    let user_profile = db.get_user(&id);
     match user_profile {
-        Ok(user) => context.requested = Some(serde_json::to_value(user).unwrap()),
-        Err(_) => context.error = Some("User not found".to_string()),
-    };
-    Template::render("user", &context)
+        Ok(user) => {
+            context.requested = Some(serde_json::to_value(UserWithDevices {
+                user: user.clone(),
+                devices: db.get_devices(user.id).unwrap(),
+            }).unwrap());
+            Template::render("user", &context)
+        },
+        Err(_) => {
+            context.error = Some("User not found".to_string());
+            Template::render("error", &context)
+        },
+    }
 }
 
 #[get("/user")]

@@ -5,7 +5,8 @@ use rocket_dyn_templates::Template;
 use serde::{Serialize, Deserialize};
 use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 
-use crate::{error::DatastoreError, db::Db};
+use crate::db::Db;
+use crate::error::DatastoreError;
 
 #[derive(FromForm)]
 pub struct Login {
@@ -56,6 +57,7 @@ pub fn login_post(db: &State<Db>, login_form: Form<Login>, cookies: &CookieJar) 
                 sub: login_form.username.to_owned(),
                 company: "ACME".to_owned(),
             };
+            // TODO: set to something actually secret
             let key = b"secret";
             let token = encode(
                 &Header::new(Algorithm::HS256),

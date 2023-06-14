@@ -9,6 +9,16 @@
         It is under development, so expect bugs, rough edges, and missing features.
     </p>
 
+    <h4>Pages</h4>
+    <ul>
+        <li>
+            <a href="/users">Users</a>
+        </li>
+        <li>
+            <a href="/user/test">User @test</a>
+        </li>
+    </ul>
+
     <h4>Test</h4>
     <p class="error">An example error</p>
 {% endblock content %}

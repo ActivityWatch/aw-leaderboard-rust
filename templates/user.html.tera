@@ -1,14 +1,35 @@
 {% extends "base" %}
 {% block content %}
+    {% set isSelf = user and user.username == requested.user.username %}
     <div class="my-1">
-        <a href="/users">Users</a> &RightAngleBracket; @{{requested.username}}
+        <a href="/users">Users</a> &RightAngleBracket; @{{requested.user.username}}
     </div>
     <hr>
     <h1>
-        @{{requested.username}}
-        {% if user and user.username == requested.username %}
+        @{{requested.user.username}}
+        {% if isSelf %}
         <span class="dimmed">(you!)</span>
         {% endif %}
     </h1>
-    <p>Profile stuff goes here</p>
+    <p>Just another user.</p>
+
+    <h3>Activity</h3>
+
+    <h3>Devices</h3>
+    {% if requested.devices %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Last reported</th>
+            </tr>
+            {% for device in requested.devices %}
+                <tr>
+                    <td>{{ device.name }}</td>
+                    <td>{{ device.last_seen }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="dimmed">No devices.</div>
+    {% endif %}
 {% endblock %}
