@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>
+        {% block title %}
+            {% if title %}
+                {{ title }}
+            {% else %}
+                Home
+            {% endif %}
+        {% endblock title %} - ActivityWatch Leaderboard
+    </title>
+    {% endblock head %}
+</head>
+<body>
+    {% include "common/header" %}
+    <div class="container">
+        <div id="content">
+            {% block content %}
+                No content on page.
+            {% endblock content %}
+        </div>
+        {% include "common/footer" %}
+    </div>
+</body>
+</html>

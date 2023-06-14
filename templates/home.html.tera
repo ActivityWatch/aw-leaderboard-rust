@@ -1,0 +1,14 @@
+{% extends "base" %}
+{% block content %}
+    <h1>Welcome to the ActivityWatch Leaderboard</h1>
+    <p>
+        This is a web application where you can upload and share your time-tracking data from free and open-source automated time-tracker <a href="https://activitywatch.net">ActivityWatch</a>.
+    </p>
+
+    <p>
+        It is under development, so expect bugs, rough edges, and missing features.
+    </p>
+
+    <h4>Test</h4>
+    <p class="error">An example error</p>
+{% endblock content %}

@@ -25,7 +25,7 @@ mod tests {
         let client = Client::tracked(rocket).expect("valid rocket instance");
 
         // Register a user
-        let response = client.post("/register").header(ContentType::Form).body("username=testuser&email=testunit@example.com&password=test").dispatch();
+        let response = client.post("/signup").header(ContentType::Form).body("username=testuser&email=testunit@example.com&password=test").dispatch();
         assert_eq!(response.status(), Status::SeeOther); // Expect a redirect after successful registration
 
         // Attempt to login

@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a:visited {
+    color: #0000FF;
+}
+
+hr {
+    border: 1px solid #AAA;
+}
+
+/* Sections */
+#header {
+    border: 0 solid #000;
+    border-bottom-width: 1px;
+    padding: 5px;
+}
+#content {}
+
+/* Helper classes */
+.container {
+    margin: 0 auto;
+    width: 800px;
+}
+
+/* Margin and padding */
+.m-1 {
+    margin: 1em;
+}
+.mx-1 {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.my-1 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.p-1 {
+    padding: 1em;
+}
+.px-1 {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.py-1 {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+/* Text and box styling */
+.dimmed {
+    color: #AAA;
+}
+.small {
+    font-size: 0.8em;
+}
+.error {
+    border: 1px solid #FF0000;
+    color: #CC0000;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #FFDDDD;
+}

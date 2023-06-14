@@ -1,0 +1,5 @@
+{% extends "base" %}
+{% block content %}
+    <h1>Error</h1>
+    <pre>{{error}}</pre>
+{% endblock content %}

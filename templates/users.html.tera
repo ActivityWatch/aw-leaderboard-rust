@@ -1,0 +1,17 @@
+{% extends "base" %}
+{% block content %}
+    <h1>Users</h1>
+    {% set users = requested %}
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Data</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td><a href="/user/{{user.username}}">@{{user.username}}</a></td>
+                <td>More data</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

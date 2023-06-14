@@ -1,15 +1,14 @@
-<div style="display: flex">
+<div id="header" style="display: flex">
     <div style="flex: 1">
         <a href="/">
             <b>aw-leaderboard</b>
         </a>
     </div>
     <div style="flex: 1; text-align: right">
-        {{#if user}}
+        {% if user %}
             Logged in as <a href="/user/{{user.username}}"></a>{{user.username}} | <a href="/logout">Logout</a>
-        {{else}}
+        {% else %}
             <a href="/login">Login</a> | <a href="/register">Register</a>
-        {{/if}}
+        {% endif %}
     </div>
 </div>
-<hr>

@@ -1,0 +1,14 @@
+{% extends "base" %}
+{% block content %}
+    <div class="my-1">
+        <a href="/users">Users</a> &RightAngleBracket; @{{requested.username}}
+    </div>
+    <hr>
+    <h1>
+        @{{requested.username}}
+        {% if user and user.username == requested.username %}
+        <span class="dimmed">(you!)</span>
+        {% endif %}
+    </h1>
+    <p>Profile stuff goes here</p>
+{% endblock %}

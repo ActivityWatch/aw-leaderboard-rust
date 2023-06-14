@@ -7,7 +7,7 @@ A public leaderboard for ActivityWatch data.
 
 Inspired by the [WakaTime leaderboard](https://wakatime.com/leaders).
 
-Built with Rust using Rocket and very basic handlebars templates (for now).
+Built with Rust using Rocket and (very basic) tera2 templates (for now).
 
 
 ## Overview
