@@ -3,6 +3,8 @@ aw-leaderboard
 
 [![Build](https://github.com/ActivityWatch/aw-leaderboard/actions/workflows/build.yml/badge.svg)](https://github.com/ActivityWatch/aw-leaderboard/actions/workflows/build.yml)
 
+**NOTE: This project was an experiment and has been abandoned. See [aw-leaderboard-firebase](https://github.com/ActivityWatch/aw-leaderboard-firebase) for a newer attempt.**
+
 A public leaderboard for ActivityWatch data.
 
 Inspired by the [WakaTime leaderboard](https://wakatime.com/leaders).
